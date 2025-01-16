@@ -1,0 +1,18 @@
+<odoo>
+     <record id="project_category_tree_view" model="ir.ui.view">
+        <field name="name">project.category.tree.views</field>
+        <field name="model">project.category</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </tree>
+        </field>
+    </record>
+     <record id="action_project_category" model="ir.actions.act_window">
+        <field name="name">Project Category</field>
+        <field name="res_model">project.category</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem parent="project.menu_project_config" id="menu_project_category" name="Project Category" action="action_project_category" groups="project.group_project_manager"/>
+</odoo>
