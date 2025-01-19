@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Checklist item form view -->
+    <record id="checklist_item_action_form" model="ir.ui.view">
+        <field name="name">checklist.item.action.form</field>
+        <field name="model">checklist.item</field>
+        <field name="arch" type="xml">
+            <form string="Checklist Item">
+                <sheet>
+                    <group>
+                        <group name="checklist_item">
+                            <field name="name" />
+                            <field name="parent_checklist" />
+                            <field name="checklist_id" invisible="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search/groupby view -->
+    <record id="checklist_item_search_form" model="ir.ui.view">
+        <field name="name">checklist.item.search.form</field>
+        <field name="model">checklist.item</field>
+        <field name="arch" type="xml">
+            <search string="Checklist Item">
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Checklist"
+                        name="checklist_id"
+                        context="{'group_by': 'checklist_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="checklist_item_pivot" model="ir.ui.view">
+        <field name="name">checklist.item.pivot</field>
+        <field name="model">checklist.item</field>
+        <field name="arch" type="xml">
+            <pivot string="Checklist Item" sample="1">
+                <field name="checklist_id" type="row" />
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Checklist item action -->
+    <record id="checklist_item_action" model="ir.actions.act_window">
+        <field name="name">Checklist Item</field>
+        <field name="res_model">checklist.item</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a checklist Item</p>
+        </field>
+    </record>
+</odoo>

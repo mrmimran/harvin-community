@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherited project.task model form view to add checklist page -->
+    <record id="project_task_progress_notebook" model="ir.ui.view">
+        <field name="name">project.task.notebook</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="checklist_ids" widget="many2many_tags" />
+                <field
+                    name="checklist_progress"
+                    widget="progressbar"
+                    invisible="not checklist_ids"
+                />
+            </xpath>
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page
+                    name="task_checklist_page"
+                    string="Task Checklist"
+                    invisible="not checklist_ids"
+                >
+                    <field name="checklist_task_item_ids">
+                        <tree decoration-bf="1">
+                            <field name="item_id" column_invisible="1" />
+                            <field
+                                name="name"
+                                decoration-success="state =='done'"
+                                decoration-danger="state =='todo'"
+                            />
+                            <button
+                                type="object"
+                                name="mark_completed"
+                                icon="fa-check-circle"
+                                string="Complete"
+                                title="Complete"
+                                class="text-success"
+                                invisible="state == 'done'"
+                            />
+                            <button
+                                type="object"
+                                name="reset_stage"
+                                icon="fa-times"
+                                string="To Do"
+                                title="To Do"
+                                class="text-danger"
+                                invisible="state == 'todo'"
+                            />
+                            <field
+                                name="state"
+                                widget="badge"
+                                decoration-success="state =='done'"
+                                decoration-danger="state =='todo'"
+                            />
+                            <field name="completed_date" widget="badge" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherited project.task model kanban view-->
+    <record id="inherit_project_task_kanban_view" model="ir.ui.view">
+        <field name="name">project.task.inherit.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban" />
+        <field name="arch" type="xml">
+            <div name="date_deadline" position="after">
+                <field name="checklist_task_item_ids" invisible="1" />
+                <field
+                    name="checklist_progress"
+                    widget="progressbar"
+                    invisible="not checklist_task_item_ids"
+                />
+            </div>
+        </field>
+    </record>
+</odoo>
